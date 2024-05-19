@@ -13,6 +13,7 @@ class MataKuliahController extends Controller
 
     public function index(Mahasiswa $mahasiswa)
     {
+        $mahasiswa = Auth::user()->mahasiswa;
         $mataKuliah = $mahasiswa->mataKuliah; // Ambil mata kuliah yang diambil oleh mahasiswa
         return view('mahasiswas.mata_kuliah', compact('mataKuliah'));
     }

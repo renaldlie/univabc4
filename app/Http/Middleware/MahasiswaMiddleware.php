@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MahasiswaMiddleware
 {
@@ -14,14 +15,12 @@ class MahasiswaMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle($request, Closure $next)
     {
-        // Check if the authenticated user has the role of "mahasiswa"
-        if ($request->user() && $request->user()->role === 'mahasiswa') {
+        if (Auth::check() && Auth::user()->role == 'mahasiswa') {
             return $next($request);
         }
 
-        // Redirect to another route if the user is not a mahasiswa
-        return redirect('/');
+        return redirect('/'); // or any other logic
     }
 }

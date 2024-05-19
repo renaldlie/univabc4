@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<a href="{{ route('home') }}" class="btn btn-primary">Home</a>  
+<a href="{{ route('dosens.index', ['dosen' => $dosen->id]) }}" class="btn btn-primary">Back to Home</a>
 <h1>Mata Kuliah yang Diajarkan oleh Dosen</h1>
 
 @if(session('error'))

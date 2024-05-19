@@ -4,14 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Dosen extends Model
 {
     use HasFactory;
+
     protected $primaryKey = 'id_dosen';
-    protected $fillable = ['id_dosen','nidn', 'nama_dosen'];
+    protected $fillable = ['nidn', 'nama_dosen'];
 
     public function mataKuliahs()
     {
@@ -23,5 +25,9 @@ class Dosen extends Model
         return $this->belongsTo(User::class, 'id_dosen');
     }
 
-
+    public function daftarmataKuliahs()
+    {
+        return $this->belongsToMany(MataKuliah::class, 'daftarmatakuliahs', 'id_dosen', 'id_matakuliah')
+            ->withPivot('AFL1', 'AFL2', 'AFL3', 'ALP');
+    }
 }

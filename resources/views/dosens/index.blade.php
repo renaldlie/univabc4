@@ -1,9 +1,11 @@
 @extends('layouts.app')
-
+@php
+    $dosen = Auth::user()->dosen;
+@endphp
 @section('content')
 <div class="container">
     <a href="{{ route('home') }}" class="btn btn-primary mb-4">Home</a>
-    <a href="{{ route('mata-kuliah.create') }}" class="btn btn-success mb-4">Tambah Mata Kuliah</a>
+    <a href="{{ route('mata-kuliah.createMatakuliah') }}" class="btn btn-success mb-4">Tambah Mata Kuliah</a>
     <h1 class="mb-4">Mata Kuliah yang Diajarkan oleh Dosen</h1>
 
     @if(session('error'))
@@ -35,8 +37,9 @@
                                     <li class="list-group-item">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div>
-                                                {{-- <a href="{{ route('change.grades', ['mahasiswa' => $mahasiswa->id]) }}">{{ $mahasiswa->nama }}</a> --}}
-                                                <span class="badge badge-secondary ml-2">NIM: {{ $mahasiswa->nim }}</span>
+                                                <!-- Link to the edit page for each Mahasiswa -->
+                                                <a href="{{ route('dosens.editMahasiswaScores', ['dosen' => $dosen, 'mahasiswa' => $mahasiswa]) }}">{{ $mahasiswa->nama }}</a>
+                                                <span class=" badge-secondary ml-2">NIM: {{ $mahasiswa->nim }}</span>
                                             </div>
                                             <div>
                                                 <span class=" badge-info">AFL1: {{ $mahasiswa->pivot->AFL1 }}</span>

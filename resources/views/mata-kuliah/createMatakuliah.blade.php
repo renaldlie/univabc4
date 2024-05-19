@@ -12,7 +12,7 @@
 @include('headers')
 
 <div class="container mt-5">
-    <form method="POST" action="{{ route('mata-kuliah.store') }}">
+    <form action="{{ route('dosens.storeMatakuliah') }}" method="POST">
         @csrf
         <div class="form-group">
             <label for="nama_matakuliah">Nama Mata Kuliah:</label>

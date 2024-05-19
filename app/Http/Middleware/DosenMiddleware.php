@@ -9,9 +9,10 @@ class DosenMiddleware
 {
     public function handle($request, Closure $next)
     {
-        if ($request->user() && $request->user()->role === 'dosen') {
+        if (Auth::check() && Auth::user()->role == 'dosen') {
             return $next($request);
         }
-        return redirect('/');
-    }   
+
+        return redirect('/'); // or any other logic
+    }
 }

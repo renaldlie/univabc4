@@ -1,6 +1,6 @@
 @extends('layout')
 @include('navbar')
-<form action="{{ route('dosens.create') }}" method="POST">
+<form action="{{ route('dosens.storeMatakuliah') }}" method="POST">
     @csrf
     <div class="form-group">
         <label for="nama_matakuliah">Nama Mata Kuliah</label>
