@@ -25,9 +25,9 @@ class Dosen extends Model
         return $this->belongsTo(User::class, 'id_dosen');
     }
 
+
     public function daftarmataKuliahs()
-    {
-        return $this->belongsToMany(MataKuliah::class, 'daftarmatakuliahs', 'id_dosen', 'id_matakuliah')
-            ->withPivot('AFL1', 'AFL2', 'AFL3', 'ALP');
-    }
+{
+    return $this->hasMany(DaftarMataKuliah::class);
+}
 }

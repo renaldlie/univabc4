@@ -28,8 +28,9 @@ class Mahasiswa extends Model
     }
     public function mataKuliahs()
     {
-        return $this->belongsToMany(MataKuliah::class, 'daftarmatakuliahs')
+        return $this->belongsToMany(MataKuliah::class)
             ->withPivot('AFL1', 'AFL2', 'AFL3', 'ALP');
     }
+
 
 }

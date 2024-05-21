@@ -4,7 +4,7 @@
 @endphp
 @section('content')
 <div class="container">
-    <a href="{{ route('home') }}" class="btn btn-primary mb-4">Home</a>
+    <a href="{{ route('dosens.index') }}" class="btn btn-primary mb-4">Home</a>
     <a href="{{ route('mata-kuliah.createMatakuliah') }}" class="btn btn-success mb-4">Tambah Mata Kuliah</a>
     <h1 class="mb-4">Mata Kuliah yang Diajarkan oleh Dosen</h1>
 
@@ -38,8 +38,8 @@
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div>
                                                 <!-- Link to the edit page for each Mahasiswa -->
-                                                <a href="{{ route('dosens.editMahasiswaScores', ['dosen' => $dosen, 'mahasiswa' => $mahasiswa]) }}">{{ $mahasiswa->nama }}</a>
-                                                <span class=" badge-secondary ml-2">NIM: {{ $mahasiswa->nim }}</span>
+                                                <a href="{{ route('editMahasiswaScores', ['mahasiswa' => $mahasiswa->id_mahasiswa, 'id_daftarmatakuliah' => $mataKuliah->id_matakuliah]) }}">{{ $mahasiswa->nama }}</a>
+                                                <span class="badge badge-secondary ml-2">NIM: {{ $mahasiswa->nim }}</span>
                                             </div>
                                             <div>
                                                 <span class=" badge-info">AFL1: {{ $mahasiswa->pivot->AFL1 }}</span>

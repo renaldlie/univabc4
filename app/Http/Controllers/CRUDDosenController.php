@@ -13,7 +13,6 @@ class CRUDDosenController extends Controller
     {
         $dosen = Auth::user()->dosen;
 
-        // Retrieve the Mata Kuliah created by the Dosen
         $mataKuliahs = $dosen->mataKuliahs;
 
         // Initialize an empty array to hold Mahasiswa by Mata Kuliah
@@ -48,12 +47,12 @@ class CRUDDosenController extends Controller
 
     public function show(Dosen $id)
 {
-    // Retrieve the first MataKuliah record with the given id_dosen
+
     $mataKuliah = MataKuliah::where('id_dosen', $id->id_dosen)->first();
 
-    // Check if a related MataKuliah record exists
+
     if ($mataKuliah) {
-        // Retrieve the Dosen instance based on the id_dosen from the related MataKuliah record
+
         $dosen = $mataKuliah->dosen;
 
         // Retrieve all MataKuliah instances related to the Dosen

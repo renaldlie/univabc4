@@ -13,13 +13,11 @@ class DosenController extends Controller
 {
     public function index(Request $request)
 {
-    // Get the Dosen from the authenticated user
+
     $dosen = Auth::user()->dosen;
 
-    // Retrieve the Mata Kuliah created by the Dosen
     $mataKuliahs = $dosen->mataKuliahs;
 
-    // Initialize an empty array to hold Mahasiswa by Mata Kuliah
     $mahasiswasByMataKuliah = [];
 
     // Iterate through Mata Kuliah to get the corresponding Mahasiswa
@@ -27,18 +25,10 @@ class DosenController extends Controller
         $mahasiswasByMataKuliah[$mataKuliah->id] = $mataKuliah->mahasiswas;
     }
 
-    // Pass the data to the view, including $dosen
     return view('userDosen.index', compact('mataKuliahs', 'mahasiswasByMataKuliah', 'dosen'));
 }
 
-    public function changeGrades(MataKuliah $mataKuliah, Mahasiswa $mahasiswa)
-    {
-        // Retrieve the Mahasiswa related to this entry in daftarmatakuliahs
-        // You can also filter by $mataKuliah if needed
-        $mahasiswas = $mataKuliah->mahasiswas->where('id', $mahasiswa->id);
 
-        return view('userDosen.change_grades', compact('mahasiswas'));
-    }
 
     public function storeMatakuliah(Request $request)
     {
@@ -51,7 +41,7 @@ class DosenController extends Controller
             'ruangan' => 'required|string|max:255',
         ]);
 
-        $id_dosen = Auth::id(); // Change to get Dosen object
+        $id_dosen = Auth::id();
 
     MataKuliah::create([
         'id_dosen' => $id_dosen,
@@ -78,12 +68,39 @@ class DosenController extends Controller
         return view('userDosen.grades', compact('dosen'));
     }
 
-    public function editMahasiswaScores(Dosen $dosen, Mahasiswa $mahasiswa)
-    {
-        // Retrieve Mahasiswa scores and any other necessary data
-        $mataKuliahs = $dosen->daftarmataKuliahs()->withPivot('AFL1', 'AFL2', 'AFL3', 'ALP')->get();
+    public function editMahasiswaScores($mahasiswaId, $id_daftarmatakuliah)
+{
+        $mahasiswa = Mahasiswa::findOrFail($mahasiswaId);
 
-        // Pass the Mahasiswa and Mata Kuliah data to the view
-        return view('userDosen.edit_mahasiswa_scores', compact('dosen', 'mahasiswa', 'mataKuliahs'));
+    $mataKuliahs = MataKuliah::findOrFail($id_daftarmatakuliah);
+
+        return view('edit_mahasiswa_scores', compact('mahasiswa', 'mataKuliahs'));
     }
+
+    public function updateMahasiswaScores(Request $request, $mahasiswaId, $id_daftarmatakuliah)
+{
+
+    $request->validate([
+        'AFL1' => 'required|numeric|min:0|max:100',
+        'AFL2' => 'required|numeric|min:0|max:100',
+        'AFL3' => 'required|numeric|min:0|max:100',
+        'ALP' => 'required|numeric|min:0|max:100',
+    ]);
+
+    // Find the Mahasiswa and MataKuliah instances
+    $mahasiswa = Mahasiswa::findOrFail($mahasiswaId);
+    $mataKuliah = MataKuliah::findOrFail($id_daftarmatakuliah);
+
+
+    $mataKuliah->mahasiswas()->updateExistingPivot($mahasiswa->id_mahasiswa, [
+        'AFL1' => $request->AFL1,
+        'AFL2' => $request->AFL2,
+        'AFL3' => $request->AFL3,
+        'ALP' => $request->ALP,
+    ]);
+
+    
+    return redirect()->route('editMahasiswaScores', ['mahasiswa' => $mahasiswa->id_mahasiswa, 'id_daftarmatakuliah' => $mataKuliah->id_matakuliah])
+                     ->with('success', 'Scores updated successfully.');
+}
 }

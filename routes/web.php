@@ -26,7 +26,9 @@ Route::middleware(['auth', 'dosen'])->group(function () {
     Route::get('/change-grades/{mataKuliah}/{mahasiswa}', [DosenController::class, 'changeGrades'])->name('change.grades');
     Route::get('/dosens/create-matakuliah', [DosenController::class, 'createMatakuliah'])->name('dosens.createMatakuliah');
     Route::post('/dosens/store-matakuliah', [DosenController::class, 'storeMatakuliah'])->name('dosens.storeMatakuliah');
-    Route::get('/dosens/{dosen}/edit-scores/{mahasiswa}', [DosenController::class, 'editMahasiswaScores'])->name('dosens.editMahasiswaScores');
+    Route::get('/edit-scores/{mahasiswa}/{id_daftarmatakuliah}', [DosenController::class, 'editMahasiswaScores'])->name('editMahasiswaScores');
+    Route::post('/update-scores/{mahasiswa}/{id_daftarmatakuliah}', [DosenController::class, 'updateMahasiswaScores'])->name('updateMahasiswaScores');
+
 
 
 });

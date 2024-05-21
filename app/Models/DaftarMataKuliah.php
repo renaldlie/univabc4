@@ -23,6 +23,11 @@ class DaftarMataKuliah extends Model
         return $this->belongsTo(MataKuliah::class, 'id_matakuliah');
     }
 
+    public function dosen()
+{
+    return $this->belongsTo(Dosen::class);
+}
+
 
 
 
